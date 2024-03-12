@@ -16,6 +16,7 @@ class ProductsTest < ApplicationSystemTestCase
 
     fill_in "List", with: @product.list_id
     fill_in "Name", with: @product.name
+    fill_in "Token", with: @product.token
     click_on "Create Product"
 
     assert_text "Product was successfully created"
@@ -28,6 +29,7 @@ class ProductsTest < ApplicationSystemTestCase
 
     fill_in "List", with: @product.list_id
     fill_in "Name", with: @product.name
+    fill_in "Token", with: @product.token
     click_on "Update Product"
 
     assert_text "Product was successfully updated"

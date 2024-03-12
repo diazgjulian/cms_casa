@@ -2,8 +2,10 @@
 
 one:
   name: MyString
+  token: MyString
   list: one
 
 two:
   name: MyString
+  token: MyString
   list: two
