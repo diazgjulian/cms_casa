@@ -1,0 +1,18 @@
+<%= form_tag sessions_path do %>
+
+  <div class="my-5">
+    <%= label_tag :email %>
+    <%= text_field_tag :email, nil, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder: "Email" %>
+  </div>
+
+  <div class="my-5">
+    <%= label_tag :password %>
+    <%= password_field_tag :password, nil, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full", placeholder: "Contraseña" %>
+  </div>
+
+  <div class="inline">
+    <%= submit_tag 'Login', class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
+    <%= link_to "Usuario nuevo", new_user_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+  </div>
+  
+<% end %>
