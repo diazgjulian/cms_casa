@@ -7,6 +7,14 @@ Rails.application.routes.draw do
   post "/sessions", to: "sessions#create"
   delete "/sessions", to: "sessions#destroy"
 
+  resources :lists
+  resources :products
+  resources :kinds
+
+  post '/lists/:id/add/:product_id', to: 'lists#add_product', as: :add_product_lists
+  delete '/lists/:id/remove/:product_id', to: 'lists#remove_product', as: :remove_product_lists
+
+
   # Defines the root path route ("/")
-  root "sessions#new"
+  root "lists#index"
 end

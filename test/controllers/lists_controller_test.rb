@@ -17,7 +17,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
 
   test "should create list" do
     assert_difference("List.count") do
-      post lists_url, params: { list: { name: @list.name } }
+      post lists_url, params: { list: { kind: @list.kind, name: @list.name } }
     end
 
     assert_redirected_to list_url(List.last)
@@ -34,7 +34,7 @@ class ListsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update list" do
-    patch list_url(@list), params: { list: { name: @list.name } }
+    patch list_url(@list), params: { list: { kind: @list.kind, name: @list.name } }
     assert_redirected_to list_url(@list)
   end
 

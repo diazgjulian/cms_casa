@@ -1,9 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  kind: 1
+  list: one
+  product: one
 
 two:
-  name: MyString
-  kind: 1
+  list: two
+  product: two

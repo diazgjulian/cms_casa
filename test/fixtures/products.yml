@@ -2,10 +2,8 @@
 
 one:
   name: MyString
-  token: MyString
-  list: one
+  kind: 1
 
 two:
   name: MyString
-  token: MyString
-  list: two
+  kind: 1

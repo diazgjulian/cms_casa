@@ -14,6 +14,7 @@ class ListsTest < ApplicationSystemTestCase
     visit lists_url
     click_on "New list"
 
+    fill_in "Kind", with: @list.kind
     fill_in "Name", with: @list.name
     click_on "Create List"
 
@@ -25,6 +26,7 @@ class ListsTest < ApplicationSystemTestCase
     visit list_url(@list)
     click_on "Edit this list", match: :first
 
+    fill_in "Kind", with: @list.kind
     fill_in "Name", with: @list.name
     click_on "Update List"
 

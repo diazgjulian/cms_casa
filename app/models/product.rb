@@ -1,3 +1,6 @@
 class Product < ApplicationRecord
-  belongs_to :list
+
+  has_many :list_items
+  has_many :lists, through: :backpack_items
+
 end
