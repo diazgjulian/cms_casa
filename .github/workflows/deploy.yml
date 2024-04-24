@@ -26,7 +26,7 @@ jobs:
         run: docker push ghcr.io/diazgjulian/cms_casa:latest
       -
         name: VPS - pull image and run app containters
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@0.1.3
         with:
           host: 192.168.1.89
           username: cms_casa 
