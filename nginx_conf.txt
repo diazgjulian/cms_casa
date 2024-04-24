@@ -1,0 +1,39 @@
+upstream cms_casa {
+    server 127.0.0.1:3110;
+}
+
+server {
+    server_name 192.168.1.89;
+
+    root /var/www/cms_casa/current/public;
+
+    try_files $uri/index.html $uri @cms_casa;
+
+    location @cms_casa {
+        proxy_pass http://192.168.1.89;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header Host $http_host;
+           #proxy_set_header X-Forwarded-Proto https;
+        proxy_set_header  X-Forwarded-Proto $scheme;
+        proxy_set_header  X-Forwarded-Ssl on;
+        proxy_set_header  X-Forwarded-Port $server_port;
+        proxy_set_header  X-Forwarded-Host $host;
+        proxy_redirect off;
+    }
+
+    error_page 500 502 503 504 /500.html;
+    client_max_body_size 4G;
+    keepalive_timeout 10;
+
+    location ~ ^/(assets)/ {
+      gzip_static on;
+      expires max;
+      add_header Cache-Control public;
+    }
+
+    location ~ ^/(system)/ {
+      gzip_static on;
+      expires max;
+      add_header Cache-Control public;
+    }
+}

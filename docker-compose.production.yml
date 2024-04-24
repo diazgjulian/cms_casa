@@ -1,0 +1,63 @@
+version: '3'
+services:
+
+  # service configuration for our database
+  db:
+    user: "1000:1000"
+
+    # use the preferred version of the official Postgres image
+    # see https://hub.docker.com/_/postgres/
+    image: postgres
+
+    # sources environment variable configuration for our app
+    env_file: .env_production
+    
+    # persist the database between containers by storing it in a volume
+    volumes:
+      - ./pg:/var/lib/postgresql/data
+
+    restart: always
+
+    # ports:
+    #   - "5432:5432"
+
+
+  # service configuration for our dockerized Rails app
+  app:
+    user: "1000:1000"
+
+    # use the Dockerfile next to this file
+    build: .
+
+    # sources environment variable configuration for our app
+    env_file: .env_production
+
+    restart: always
+
+    # # rely on the RAILS_ENV value of the host machine
+    # environment:
+    #   RAILS_ENV: production
+
+    # expose the port we configured Unicorn to bind to
+    ports:
+      - "3110:3000"
+
+    volumes:
+      - .:/var/www/app
+      - /var/www/exports:/var/www/exports
+      - /var/www/cms_casa/shared/log:/var/www/app/log
+      - /var/www/cms_casa/shared/public/system:/var/www/app/public/system
+      - /var/www/cms_casa/shared/public/uploads:/var/www/app/public/uploads
+      - /var/www/cms_casa/shared/public/img_subidas:/var/www/app/public/img_subidas
+      - /var/www/cms_casa/shared/public/img:/var/www/app/public/img
+
+
+
+    tty: true
+
+    command: >
+      bash -c "rm -f /var/www/app/tmp/pids/server.pid || true && 
+        bundle exec rails s -p 3000 -b '0.0.0.0'"
+
+    depends_on:
+      - db
