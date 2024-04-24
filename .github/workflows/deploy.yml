@@ -31,6 +31,7 @@ jobs:
           host: 192.168.1.89
           username: cms_casa 
           password: ${{ secrets.VPS_PASSWORD }}
+          port: 80
           script: |
             echo $CR_PAT | docker login ghcr.io -u diazgjulian --password-stdin
             docker-compose pull web
