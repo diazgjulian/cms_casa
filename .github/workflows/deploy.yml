@@ -1,0 +1,37 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      # Run deploy job on every push to the master branch
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Login to GitHub Container Registry
+        run: echo ${{ secrets.CR_PAT }} | docker login ghcr.io -u diazgjulian --password-stdin
+      -
+        name: Pull image to use as a cache
+        run: docker pull ghcr.io/diazgjulian/crm_casa:latest || exit 0
+      -
+        name: Build Docker image
+        run: docker build . --cache-from ghcr.io/diazgjulian/cms_casa:latest --tag ghcr.io/diazgjulian/cms_casa:latest
+      -
+        name: Push the image to GitHub Container Registry
+        run: docker push ghcr.io/diazgjulian/cms_casa:latest
+      -
+        name: VPS - pull image and run app containters
+        uses: appleboy/ssh-action@master
+        with:
+          host: 192.168.1.89
+          username: cms_casa 
+          password: ${{ secrets.VPS_PASSWORD }}
+          script: |
+            echo $CR_PAT | docker login ghcr.io -u diazgjulian --password-stdin
+            docker-compose pull web
+            docker-compose up -d --no-deps
