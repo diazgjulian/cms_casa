@@ -14,7 +14,7 @@ git_repo = 'git@github.com:diazgjulian/cms_casa.git'
 server_ip = '192.168.1.89'
 server_username = 'julian'
 # server_username = 'root'
-server_port = '22'
+server_port = '443'
 
 base_path = '/var/www/'
 
