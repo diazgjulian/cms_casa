@@ -1,4 +1,5 @@
 class KindsController < ApplicationController
+  before_action :authorized, only: [ :index, :show, :new, :create,:edit, :destroy]
   before_action :set_kind, only: %i[ show edit update destroy ]
 
   # GET /kinds or /kinds.json

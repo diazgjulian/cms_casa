@@ -1,4 +1,5 @@
 class ProductsController < ApplicationController
+  before_action :authorized, only: [ :index, :show, :new, :create,:edit, :destroy]
   before_action :set_product, only: %i[ show edit update destroy ]
 
   # GET /products or /products.json

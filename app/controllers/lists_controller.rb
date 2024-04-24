@@ -1,5 +1,7 @@
 class ListsController < ApplicationController
-  before_action :set_list, only: %i[ show edit update destroy ]
+  before_action :authorized, only: [ :index, :show, :new, :create,:edit, :destroy, :add_product, :remove_product]
+  before_action :set_list, only: %i[show edit update destroy add_product remove_product]
+  before_action :set_product, only: %i[ add_product remove_product]
 
   # GET /lists or /lists.json
   def index
@@ -9,7 +11,7 @@ class ListsController < ApplicationController
   # GET /lists/1 or /lists/1.json
   def show
     @list = List.find(params[:id])
-    @products = Product.all
+    @products = Product.where(kind: @list.kind)
   end
 
   # GET /lists/new
@@ -59,10 +61,30 @@ class ListsController < ApplicationController
     end
   end
 
+  def add_product
+    @list.products << @product
+
+    respond_to do |format|
+      format.html { redirect_to list_path }
+    end
+  end
+
+  def remove_product
+    @list.products.delete(@product)
+
+    respond_to do |format|
+      format.html { redirect_to list_path }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_list
       @list = List.find(params[:id])
+    end
+
+    def set_product
+      @product = Product.find(params[:product_id])
     end
 
     # Only allow a list of trusted parameters through.

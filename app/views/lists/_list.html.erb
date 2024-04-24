@@ -1,12 +1,36 @@
 <div id="<%= dom_id list %>">
   <p class="my-5">
-    <strong class="block font-medium mb-1">Name:</strong>
-    <%= list.name %>
+    <strong class="block font-medium mb-1">
+      <%= list.name %> - <%= list.kind_name %>
+    </strong>
+    
   </p>
 
   <p class="my-5">
-    <strong class="block font-medium mb-1">Kind:</strong>
-    <%= list.kind %>
+    <strong class="block font-medium mb-1">Productos:</strong>
+    <%= turbo_frame_tag "list-products" do %>
+      <div class="current-products">
+        <ul>
+          <% if @list.present? %>
+            <% @list.products.each do |product| %>
+            <li><%= product.name %> <%= link_to "Remove", remove_product_lists_path(id: @list.id, product_id: product.id), data: { "turbo-method": :delete } %></li>
+            <% end %>
+          <% end %>
+        </ul>
+      </div>
+      <%# if false %>
+        <h2>Remaining products</h2>
+        <div class="remaining-products">
+          <ul>
+            <% if @list.present? %>
+              <% (@products - @list.products).each do |product| %>
+                <li><%= product.name %> <%= link_to "Add", add_product_lists_path(id: @list.id, product_id: product.id), data: { "turbo-method": :post } %></li>
+              <% end %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <%# end %>
   </p>
 
   <% if action_name != "show" %>
